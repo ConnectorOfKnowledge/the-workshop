@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Workshop — Apps by Lonnie</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">The Workshop</h1>
+            <p class="site-subtitle">Apps by Lonnie</p>
+        </div>
+    </header>
+
+    <nav class="filter-bar">
+        <div class="container">
+            <button class="filter-btn active" data-filter="all">All Apps</button>
+            <button class="filter-btn" data-filter="free">Free to Use</button>
+            <button class="filter-btn" data-filter="api">Needs API Key</button>
+            <button class="filter-btn" data-filter="pro">Fully Functioning</button>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <!-- Free to Use Section -->
+        <section class="tier-section" data-tier="free">
+            <div class="tier-header">
+                <span class="tier-dot tier-dot--free"></span>
+                <h2>Free to Use</h2>
+                <p class="tier-desc">Download, install, done. No setup required.</p>
+            </div>
+            <div class="app-grid">
+
+                <div class="app-card" data-tier="free">
+                    <div class="app-card-top">
+                        <div class="app-icon app-icon--tikscribe">ts</div>
+                        <div class="app-meta">
+                            <h3 class="app-name">tikscribe</h3>
+                            <p class="app-tagline">Paste a TikTok or YouTube link, get a full transcript.</p>
+                        </div>
+                    </div>
+                    <div class="app-card-body">
+                        <div class="app-platforms">
+                            <span class="platform-badge platform-badge--android">Android</span>
+                        </div>
+                        <p class="app-version">v1.0 &middot; 4.1 MB</p>
+                    </div>
+                    <div class="app-card-actions">
+                        <a href="#" class="btn btn--primary">Download APK</a>
+                    </div>
+                    <p class="app-ready-label">Ready to use — no setup needed</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Needs API Key Section -->
+        <section class="tier-section" data-tier="api">
+            <div class="tier-header">
+                <span class="tier-dot tier-dot--api"></span>
+                <h2>Needs API Key</h2>
+                <p class="tier-desc">Free apps — you just need to grab an API key. Each app has a step-by-step setup guide.</p>
+            </div>
+            <div class="app-grid">
+
+                <div class="app-card" data-tier="api">
+                    <div class="app-card-top">
+                        <div class="app-icon app-icon--cleandictate">cd</div>
+                        <div class="app-meta">
+                            <h3 class="app-name">CleanDictate</h3>
+                            <p class="app-tagline">AI-powered Android keyboard that cleans up your speech as you dictate.</p>
+                        </div>
+                    </div>
+                    <div class="app-card-body">
+                        <div class="app-platforms">
+                            <span class="platform-badge platform-badge--android">Android</span>
+                        </div>
+                        <p class="app-version">v2.1 &middot; 8.3 MB</p>
+                        <span class="api-indicator">Requires: Gemini API Key</span>
+                    </div>
+                    <div class="app-card-actions">
+                        <a href="#" class="btn btn--primary">Download APK</a>
+                        <button class="btn btn--outline" onclick="openGuide('cleandictate')">Setup Guide</button>
+                    </div>
+                </div>
+
+                <div class="app-card" data-tier="api">
+                    <div class="app-card-top">
+                        <div class="app-icon app-icon--prattle">pr</div>
+                        <div class="app-meta">
+                            <h3 class="app-name">Prattle</h3>
+                            <p class="app-tagline">Desktop voice-to-text that actually gets your words right.</p>
+                        </div>
+                    </div>
+                    <div class="app-card-body">
+                        <div class="app-platforms">
+                            <span class="platform-badge platform-badge--windows">Windows</span>
+                        </div>
+                        <p class="app-version">v1.0 &middot; 52 MB</p>
+                        <span class="api-indicator">Requires: Speech-to-Text API Key</span>
+                    </div>
+                    <div class="app-card-actions">
+                        <a href="#" class="btn btn--primary">Download Installer</a>
+                        <button class="btn btn--outline" onclick="openGuide('prattle')">Setup Guide</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Fully Functioning Section -->
+        <section class="tier-section" data-tier="pro">
+            <div class="tier-header">
+                <span class="tier-dot tier-dot--pro"></span>
+                <h2>Fully Functioning</h2>
+                <p class="tier-desc">Premium apps with everything included — no setup, no API keys. Just works.</p>
+            </div>
+            <div class="coming-soon-box">
+                <p class="coming-soon-text">Coming soon.</p>
+                <p class="coming-soon-sub">Premium versions of these apps are on the way. Everything built in, nothing to configure. Stay tuned.</p>
+            </div>
+        </section>
+
+        <!-- Coming Soon: iPhone -->
+        <section class="platform-note">
+            <p>iPhone apps are on the roadmap. For now, everything runs on Android and Windows.</p>
+        </section>
+
+    </main>
+
+    <!-- Setup Guide Modal -->
+    <div id="guide-overlay" class="guide-overlay hidden" onclick="closeGuide(event)">
+        <div class="guide-modal" onclick="event.stopPropagation()">
+            <div class="guide-header">
+                <h2 id="guide-title">Setup Guide</h2>
+                <button class="guide-close" onclick="closeGuide()">&times;</button>
+            </div>
+            <div id="guide-content" class="guide-content">
+                <!-- Steps injected by JS -->
+            </div>
+            <div class="guide-footer">
+                <button id="guide-prev" class="btn btn--outline" onclick="guideStep(-1)">Back</button>
+                <span id="guide-progress" class="guide-progress">Step 1 of 3</span>
+                <button id="guide-next" class="btn btn--primary" onclick="guideStep(1)">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Built by Lonnie &middot; Questions? Just text me.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

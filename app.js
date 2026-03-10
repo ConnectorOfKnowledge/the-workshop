@@ -186,3 +186,124 @@ function renderGuideStep() {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeGuide();
 });
+
+// ── TicketDeck Bug Widget ───────────────────────────────────────
+const TICKETDECK_URL = 'https://dgnikbbugiuuwokwenlm.supabase.co/rest/v1/tickets';
+const TICKETDECK_KEY = 'sb_publishable_L2VH13C5NYtdSBoENpoh9Q_d7iJHDOF';
+let bugFiles = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    const bugInput = document.getElementById('bug-file-input');
+    if (bugInput) {
+        bugInput.addEventListener('change', (e) => {
+            Array.from(e.target.files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                if (bugFiles.length >= 3) return;
+                bugFiles.push(file);
+            });
+            renderBugFilePreviews();
+            e.target.value = '';
+        });
+    }
+});
+
+function renderBugFilePreviews() {
+    const container = document.getElementById('bug-file-previews');
+    if (!container) return;
+    container.innerHTML = bugFiles.map((file, i) => {
+        const url = URL.createObjectURL(file);
+        return `<div class="bug-file-preview">
+            <img src="${url}" alt="${file.name}">
+            <button class="remove-bug-file" onclick="removeBugFile(${i})">&times;</button>
+        </div>`;
+    }).join('');
+}
+
+function removeBugFile(index) {
+    bugFiles.splice(index, 1);
+    renderBugFilePreviews();
+}
+
+function toggleBugPanel() {
+    const panel = document.getElementById('bug-panel');
+    panel.classList.toggle('hidden');
+    if (!panel.classList.contains('hidden')) {
+        document.getElementById('bug-form').reset();
+        bugFiles = [];
+        renderBugFilePreviews();
+        const status = document.getElementById('bug-status');
+        status.classList.add('hidden');
+        status.className = 'bug-status-msg hidden';
+    }
+}
+
+async function submitBugTicket(e) {
+    e.preventDefault();
+    const btn = document.getElementById('bug-submit-btn');
+    const statusEl = document.getElementById('bug-status');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    statusEl.classList.add('hidden');
+
+    const title = document.getElementById('bug-title').value.trim();
+    const description = document.getElementById('bug-desc').value.trim();
+    const type = document.getElementById('bug-type').value;
+    const priority = document.getElementById('bug-priority').value;
+
+    const attachments = bugFiles.length > 0 ? await filesToBase64(bugFiles) : null;
+
+    const ticket = {
+        project: 'workshop',
+        type,
+        priority,
+        title: title.substring(0, 60),
+        description: description || title,
+        status: 'open',
+        tags: ['workshop-widget'],
+    };
+    if (attachments) ticket.attachments = attachments;
+
+    try {
+        const res = await fetch(TICKETDECK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': TICKETDECK_KEY,
+                'Authorization': `Bearer ${TICKETDECK_KEY}`,
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(ticket)
+        });
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message || 'Failed to submit ticket');
+        }
+        statusEl.textContent = 'Ticket submitted! Thanks for reporting.';
+        statusEl.className = 'bug-status-msg success';
+        statusEl.classList.remove('hidden');
+        document.getElementById('bug-form').reset();
+        bugFiles = [];
+        renderBugFilePreviews();
+        setTimeout(() => toggleBugPanel(), 2000);
+    } catch (err) {
+        statusEl.textContent = 'Error: ' + err.message;
+        statusEl.className = 'bug-status-msg error';
+        statusEl.classList.remove('hidden');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Ticket';
+    }
+}
+
+async function filesToBase64(files) {
+    return Promise.all(files.map(file => fileToBase64(file)));
+}
+
+async function fileToBase64(file) {
+    const data = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+    });
+    return { name: file.name, type: file.type, size: file.size, data };
+}

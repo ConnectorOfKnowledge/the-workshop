@@ -150,6 +150,47 @@
         </div>
     </div>
 
+    <!-- TicketDeck Bug Widget -->
+    <button id="bug-fab" onclick="toggleBugPanel()" title="Report a Bug">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="6" width="8" height="14" rx="4"/><line x1="6" y1="9" x2="8" y2="9"/><line x1="16" y1="9" x2="18" y2="9"/><line x1="6" y1="15" x2="8" y2="15"/><line x1="16" y1="15" x2="18" y2="15"/><line x1="6" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="18" y2="12"/><line x1="10" y1="3" x2="10" y2="6"/><line x1="14" y1="3" x2="14" y2="6"/>
+        </svg>
+    </button>
+    <div id="bug-panel" class="bug-panel hidden">
+        <div class="bug-panel-header">
+            <h3>Report an Issue</h3>
+            <button class="bug-close" onclick="toggleBugPanel()">&times;</button>
+        </div>
+        <form id="bug-form" onsubmit="submitBugTicket(event)">
+            <input type="text" id="bug-title" placeholder="Short title..." required>
+            <textarea id="bug-desc" placeholder="Describe the issue..." rows="3"></textarea>
+            <div class="bug-row">
+                <select id="bug-type">
+                    <option value="bug">Bug</option>
+                    <option value="feature">Feature</option>
+                    <option value="ui_ux">UI/UX</option>
+                    <option value="performance">Performance</option>
+                    <option value="other">Other</option>
+                </select>
+                <select id="bug-priority">
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="bug-upload-area">
+                <input type="file" id="bug-file-input" accept="image/*" multiple hidden>
+                <button type="button" class="bug-attach-btn" onclick="document.getElementById('bug-file-input').click()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Attach Screenshots
+                </button>
+                <div id="bug-file-previews" class="bug-file-previews"></div>
+            </div>
+            <button type="submit" id="bug-submit-btn" class="bug-submit">Submit Ticket</button>
+        </form>
+        <p id="bug-status" class="bug-status-msg hidden"></p>
+    </div>
+
     <footer class="site-footer">
         <div class="container">
             <p>Built by Lonnie &middot; Questions? Just text me.</p>

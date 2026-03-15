@@ -235,6 +235,10 @@ body {
     font-weight: 500;
 }
 
+.app-ready-label--pending {
+    color: #9ca3af;
+}
+
 /* ── Card Actions ─────────────────────────────────────────── */
 .app-card-actions {
     display: flex;
@@ -275,6 +279,12 @@ body {
 .btn--outline:hover {
     background: #f3f4f6;
     border-color: #9ca3af;
+}
+
+.btn--disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
 }
 
 /* ── Coming Soon Box ──────────────────────────────────────── */

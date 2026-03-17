@@ -20,61 +20,6 @@ let currentGuide = null;
 let currentStep = 0;
 
 const guides = {
-    cleandictate: {
-        title: 'CleanDictate Setup Guide',
-        steps: [
-            {
-                heading: 'What you need',
-                content: `
-                    <p>CleanDictate uses AI to clean up your voice dictation in real-time. To make it work, you need a <strong>Gemini API key</strong> from Google.</p>
-                    <p>Don't worry — it's free for personal use and takes about 2 minutes to set up.</p>
-                `
-            },
-            {
-                heading: 'Get your API key',
-                content: `
-                    <p>You have a couple options for getting a Gemini API key:</p>
-                    <div class="option-card">
-                        <h4>Option 1: Google AI Studio <span class="pro-tag">(Recommended)</span></h4>
-                        <p>Free tier gives you plenty of usage for personal dictation. No credit card required.</p>
-                        <ol>
-                            <li>Go to <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></li>
-                            <li>Sign in with your Google account</li>
-                            <li>Click <strong>"Create API Key"</strong></li>
-                            <li>Copy the key — you'll paste it into CleanDictate next</li>
-                        </ol>
-                        <p><span class="pro-tag">Pros:</span> Free, fast, generous limits for personal use</p>
-                        <p><span class="con-tag">Cons:</span> Rate limits may slow down if you dictate for hours straight</p>
-                    </div>
-                    <div class="option-card">
-                        <h4>Option 2: Google Cloud Vertex AI</h4>
-                        <p>Pay-as-you-go pricing. Better for heavy usage or if you hit free tier limits.</p>
-                        <ol>
-                            <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
-                            <li>Enable the Vertex AI API</li>
-                            <li>Create an API key under Credentials</li>
-                        </ol>
-                        <p><span class="pro-tag">Pros:</span> Higher limits, more reliable for heavy use</p>
-                        <p><span class="con-tag">Cons:</span> Requires billing setup, costs ~$0.01 per 1000 words</p>
-                    </div>
-                `
-            },
-            {
-                heading: 'Add the key to CleanDictate',
-                content: `
-                    <p>Once you have your API key:</p>
-                    <ol>
-                        <li>Open CleanDictate on your Android device</li>
-                        <li>Go to <strong>Settings</strong> (gear icon)</li>
-                        <li>Tap <strong>"API Key"</strong></li>
-                        <li>Paste your key and tap <strong>Save</strong></li>
-                        <li>You're all set! Start dictating in any app.</li>
-                    </ol>
-                    <p>Your key is stored only on your device — it's never sent anywhere except directly to Google's API.</p>
-                `
-            }
-        ]
-    },
     prattle: {
         title: 'Prattle Setup Guide',
         steps: [
@@ -124,7 +69,7 @@ const guides = {
                         <li>Paste your key and click <strong>Save</strong></li>
                         <li>Done! Click the mic button and start talking.</li>
                     </ol>
-                    <p>Your key stays on your computer — Prattle sends audio directly to the API provider you chose, nowhere else.</p>
+                    <p>Your key stays on your computer - Prattle sends audio directly to the API provider you chose, nowhere else.</p>
                 `
             }
         ]
